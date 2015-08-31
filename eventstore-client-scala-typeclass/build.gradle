@@ -1,0 +1,17 @@
+
+dependencies {
+
+    compile "net.chrisrichardson.eventstore.common:eventstore-common:$eventStoreCommonVersion"
+    compile "net.chrisrichardson.eventstore.client:eventstore-client-event-handling:$eventStoreClientVersion"
+
+    compile ('org.scala-lang:scala-library:2.10.3') {
+    	force = true
+   	}
+
+    testCompile scalaTestDependency
+    testCompile "junit:junit:4.11"
+    testCompile "org.mockito:mockito-core:1.9.5"
+
+    testCompile 'org.scalacheck:scalacheck_2.10:1.11.1'
+
+}

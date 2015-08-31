@@ -1,0 +1,32 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+    }
+}
+
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile project(":eventstore-client-scala-typeclass-examples")
+
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+
+    compile "net.chrisrichardson.eventstore.client:eventstore-http-stomp-client:$eventStoreClientVersion"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile scalaTestDependency
+    testCompile "junit:junit:4.11"
+
+}
+
+if (System.getenv("EVENT_STORE_USER_ID") == null) {
+    System.out.println("\nNOTE: EVENTSTORE CREDENTIALS NOT PROVIDED\n")
+    test {
+        ignoreFailures true
+    }
+}
+

@@ -1,0 +1,3 @@
+include 'eventstore-client-scala-typeclass'
+include 'eventstore-client-scala-typeclass-examples'
+include 'eventstore-client-scala-typeclass-examples-service'
