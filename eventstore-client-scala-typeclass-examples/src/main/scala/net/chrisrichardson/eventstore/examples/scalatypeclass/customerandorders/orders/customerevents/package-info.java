@@ -1,2 +1,0 @@
-@net.chrisrichardson.eventstore.EventEntity(entity="net.chrisrichardson.eventstore.examples.scalatypeclass.customerandorders.orders.CustomerAggregateModule$Customer")
-package net.chrisrichardson.eventstore.examples.scalatypeclass.customerandorders.orders.customerevents;

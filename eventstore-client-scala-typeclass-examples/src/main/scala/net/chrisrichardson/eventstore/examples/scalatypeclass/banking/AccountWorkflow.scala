@@ -1,18 +1,18 @@
 package net.chrisrichardson.eventstore.examples.scalatypeclass.banking
 
-import net.chrisrichardson.eventstore.client.scalatypeclass.{EventStore, EventConsumerDsl}
-import EventConsumerDsl._
+import net.chrisrichardson.eventstore.client.scalatypeclass.EventConsumerDsl._
+import net.chrisrichardson.eventstore.client.scalatypeclass.{EventConsumerDsl, EventStore}
 import net.chrisrichardson.eventstore.examples.scalatypeclass.banking.AccountAggregateModule.AccountAggregate
 import net.chrisrichardson.eventstore.examples.scalatypeclass.banking.AccountCommands.{CreditAccountCommand, DebitAccountCommand}
-import net.chrisrichardson.eventstore.subscriptions.{CompoundEventHandler, EventHandlerMethod, EventSubscriber}
+import net.chrisrichardson.eventstore.subscriptions.{EventHandler, EventSubscriber}
 
 @EventSubscriber(id = "accountEventHandlers")
-class AccountWorkflow(eventStore: EventStore) extends CompoundEventHandler {
+class AccountWorkflow(eventStore: EventStore) {
 
   implicit val es = eventStore
 
 
-  @EventHandlerMethod
+  @EventHandler
   val performDebit =
     handlerForEvent[MoneyTransferCreatedEvent] { de =>
       updating {
@@ -21,7 +21,7 @@ class AccountWorkflow(eventStore: EventStore) extends CompoundEventHandler {
       }
     }
 
-  @EventHandlerMethod
+  @EventHandler
   val performCredit = handlerForEvent[DebitRecordedEvent] { de =>
     updating {
       AccountAggregate.withId(de.event.details.toAccountId) <== CreditAccountCommand(de.event.details.amount, de.entityId)
